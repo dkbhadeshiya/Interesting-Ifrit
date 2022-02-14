@@ -11,11 +11,10 @@ class EntityDetectionBot(ActivityHandler):
                   "support@johnsnowlabs.com or call us at +1-302-786-5227."
         detected_intent = detect_intent(turn_context.activity.text)
         if detected_intent and detected_intent != "None":
-            message = "Detected Intent is: " + detected_intent
-            await turn_context.send_activity(message)
             detected_entity = detect_entity(turn_context.activity.text)
             if detected_entity:
-                message = "First entity which is extracted is: " + detected_entity
+                message = "First entity which is extracted is: " + detected_entity + \
+                          "\n\nBest matched intent is: " + detected_intent
                 definition, matched_word = get_definition(detected_entity)
                 await turn_context.send_activity(message)
                 message = generate_thumbnail_card(detected_entity, definition, matched_word)
